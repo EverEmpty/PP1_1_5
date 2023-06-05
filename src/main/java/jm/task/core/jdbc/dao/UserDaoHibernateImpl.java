@@ -10,13 +10,13 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    private static Util util;
 
-    public UserDaoHibernateImpl(Util util) {
-        this.util = util;
+
+    public UserDaoHibernateImpl() {
+
     }
 
-    private static final SessionFactory sessionFactory = util.getSessionFactory();
+    private static final SessionFactory sessionFactory = Util.getSessionFactory();
     private static Transaction transaction;
 
     @Override
@@ -25,7 +25,7 @@ public class UserDaoHibernateImpl implements UserDao {
                 "  `id` BIGINT NOT NULL AUTO_INCREMENT,\n" +
                 "  `name` VARCHAR(30) NOT NULL,\n" +
                 "  `lastname` VARCHAR(30) NOT NULL,\n" +
-                "  `age` INT(3) NULL,\n" +
+                "  `age` BIT(3) NULL,\n" +
                 "  PRIMARY KEY (`id`));";
         try (Session session = sessionFactory.getCurrentSession()) {
             transaction = session.beginTransaction();
@@ -85,11 +85,10 @@ public class UserDaoHibernateImpl implements UserDao {
         List<User> userList = null;
         try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
-            userList = session.createQuery(hql).getResultList();
+            userList = session.createQuery(hql, User.class).getResultList();
             for (User i : userList) {
                 System.out.println(i);
             }
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
