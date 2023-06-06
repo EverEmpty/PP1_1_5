@@ -25,7 +25,7 @@ public class UserDaoHibernateImpl implements UserDao {
                 "  `id` BIGINT NOT NULL AUTO_INCREMENT,\n" +
                 "  `name` VARCHAR(30) NOT NULL,\n" +
                 "  `lastname` VARCHAR(30) NOT NULL,\n" +
-                "  `age` BIT(3) NULL,\n" +
+                "  `age` TINYINT(3) NOT NULL,\n" +
                 "  PRIMARY KEY (`id`));";
         try (Session session = sessionFactory.getCurrentSession()) {
             transaction = session.beginTransaction();
